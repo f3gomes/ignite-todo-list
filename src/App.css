@@ -19,7 +19,7 @@
 
 :focus {
   outline: transparent;
-  /* box-shadow: 0 0 0 2px var(--green-500); */
+  box-shadow: 0 0 0 2px var(--gray-100);
 }
 
 * {
@@ -43,3 +43,7 @@ button {
   border: none;
 }
 
+.main {
+  display: flex;
+  justify-content: center;
+}
