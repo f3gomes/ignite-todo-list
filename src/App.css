@@ -40,5 +40,6 @@ textarea,
 button {
   font-family: "Inter", sans-serif;
   line-height: 140%;
+  border: none;
 }
 
