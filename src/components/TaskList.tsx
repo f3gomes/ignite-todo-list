@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./TaskList.module.css";
 import clip from "../assets/clipboard.svg";
 import { FaRegCircle, FaTrash } from "react-icons/fa";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { MainContext } from "../context";
 
 interface TaskProps {
   id: number;
@@ -11,19 +12,7 @@ interface TaskProps {
 }
 
 export default function TaskList() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      desc: "Finalizar Projeto Desafio",
-      status: "C",
-    },
-
-    {
-      id: 2,
-      desc: "Assistir filme do Jujutsu",
-      status: "F",
-    },
-  ]);
+  const { tasks, setTasks } = useContext(MainContext);
 
   const finishedTasks = tasks.filter((item: TaskProps) => item.status === "F");
 
@@ -78,7 +67,13 @@ export default function TaskList() {
                     />
                   )}
                 </span>
-                <p>{item.desc}</p>
+                <p
+                  className={`${
+                    item.status === "F" ? styles.completedTask : ""
+                  }`}
+                >
+                  {item.desc}
+                </p>
                 <span onClick={() => handleDeleteTask(item.id)}>
                   <FaTrash />
                 </span>
