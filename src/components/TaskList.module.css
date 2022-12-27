@@ -1,5 +1,5 @@
 .container {
-  margin-top: 5.687rem;
+  margin-top: 4rem;
   width: 46rem;
   height: 17.93rem;
 
@@ -10,12 +10,6 @@
 .header {
   display: flex;
   justify-content: space-between;
-}
-
-@media (max-width: 768px) {
-  .header {
-    padding: 0 1rem;
-  }
 }
 
 .header div {
@@ -33,12 +27,13 @@
 
 .header span {
   background: var(--gray-400);
-  width: 27px;
-  height: 22px;
+  width: 1.68rem;
+  height: 1.37;
   font-weight: bold;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.875rem;
   border-radius: 999px;
 }
 
@@ -59,4 +54,40 @@
 
 .main > div:last-child {
   margin-top: 1rem;
+}
+
+.taskList {
+  margin-top: 1rem;
+}
+
+.taskItem {
+  background: var(--gray-500);
+  border-radius: 8px;
+  height: 4.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.taskItem > span:first-child {
+  color: var(--blue-100);
+  cursor: pointer;
+}
+
+.taskItem > span:last-child {
+  color: var(--gray-300);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 1rem;
+  }
+
+  .taskItem {
+    margin: 0.75rem 1rem;
+  }
 }
