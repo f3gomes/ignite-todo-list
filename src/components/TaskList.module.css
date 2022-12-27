@@ -82,6 +82,14 @@
   cursor: pointer;
 }
 
+.taskItem > span:first-child:hover {
+  color: var(--blue-200);
+}
+
+.taskItem > span:last-child:hover {
+  color: var(--red-200);
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 0 1rem;

@@ -32,6 +32,22 @@ export default function TaskList() {
     setTasks(updateTasks);
   };
 
+  const handleUpdateTaskState = (id: number) => {
+    const updateTasks = tasks.map((item: TaskProps) => {
+      if (item.id === id) {
+        if (item.status === "C") {
+          return { ...item, status: "F" };
+        }
+
+        return { ...item, status: "C" };
+      } else {
+        return item;
+      }
+    });
+
+    setTasks(updateTasks);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -52,9 +68,14 @@ export default function TaskList() {
               <div className={styles.taskItem} key={item.id}>
                 <span>
                   {item.status === "C" ? (
-                    <FaRegCircle />
+                    <FaRegCircle
+                      onClick={() => handleUpdateTaskState(item.id)}
+                    />
                   ) : (
-                    <BsCheckCircleFill color="#5e60ce" />
+                    <BsCheckCircleFill
+                      color="#5e60ce"
+                      onClick={() => handleUpdateTaskState(item.id)}
+                    />
                   )}
                 </span>
                 <p>{item.desc}</p>
