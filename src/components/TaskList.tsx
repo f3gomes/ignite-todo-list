@@ -45,8 +45,12 @@ export default function TaskList() {
         </div>
         <div>
           <strong>Concluídas</strong>
-          <span>
-            {finishedTasks?.length} de {tasks?.length}
+          <span
+            style={{ width: finishedTasks.length > 0 ? "3.5rem" : "1.68rem" }}
+          >
+            {finishedTasks?.length === 0
+              ? "0"
+              : `${finishedTasks?.length} de ${tasks?.length}`}
           </span>
         </div>
       </div>
