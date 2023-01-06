@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 interface TaskProps {
   id: number;
@@ -8,7 +8,7 @@ interface TaskProps {
 
 interface DataProps {
   tasks: TaskProps[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>;
+  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]> | any>;
 }
 
 interface ProviderProps {
@@ -18,19 +18,14 @@ interface ProviderProps {
 export const MainContext = createContext({} as DataProps);
 
 export const ContextProvider = ({ children }: ProviderProps) => {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      desc: "Finalizar Projeto Desafio",
-      status: "C",
-    },
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")!) || []
+  );
 
-    {
-      id: 2,
-      desc: "Assistir filme do Jujutsu",
-      status: "F",
-    },
-  ]);
+  useEffect(() => {
+    localStorage.removeItem("tasks");
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <MainContext.Provider

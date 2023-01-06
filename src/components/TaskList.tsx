@@ -13,7 +13,7 @@ interface TaskProps {
 export default function TaskList() {
   const { tasks, setTasks } = useContext(MainContext);
 
-  const finishedTasks = tasks.filter((item: TaskProps) => item.status === "F");
+  const finishedTasks = tasks?.filter((item: TaskProps) => item.status === "F");
 
   const handleDeleteTask = (id: number) => {
     const updateTasks = tasks.filter((item: TaskProps) => item.id !== id);
@@ -41,17 +41,17 @@ export default function TaskList() {
       <div className={styles.header}>
         <div>
           <strong>Tarefas criadas</strong>
-          <span>{tasks.length}</span>
+          <span>{tasks?.length}</span>
         </div>
         <div>
           <strong>Concluídas</strong>
           <span>
-            {finishedTasks.length} de {tasks.length}
+            {finishedTasks?.length} de {tasks?.length}
           </span>
         </div>
       </div>
 
-      {tasks.length > 0 ? (
+      {tasks?.length > 0 ? (
         <>
           <div className={styles.taskList}>
             {tasks.map((item: TaskProps) => (
