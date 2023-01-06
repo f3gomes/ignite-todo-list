@@ -1,0 +1,45 @@
+.taskItem {
+  background: var(--gray-500);
+  border-radius: 8px;
+  height: 4.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.taskCreated > svg {
+  color: var(--blue-100);
+}
+
+.taskCreated > svg:hover {
+  color: var(--blue-200);
+}
+
+.taskFinished > svg {
+  color: var(--purple-200);
+}
+
+.taskFinished > svg:hover {
+  color: var(--purple-100);
+}
+
+.taskItem > span:last-child {
+  color: var(--gray-300);
+}
+
+.taskItem > span:last-child:hover {
+  color: var(--red-200);
+}
+
+.taskFinished {
+  text-decoration: line-through;
+}
+
+@media (max-width: 768px) {
+  .taskItem {
+    margin: 0.75rem 1rem;
+  }
+}

@@ -47,3 +47,12 @@ button {
   display: flex;
   justify-content: center;
 }
+
+button {
+  cursor: pointer;
+}
+
+svg {
+  cursor: pointer;
+  transition: 0.3s;
+}

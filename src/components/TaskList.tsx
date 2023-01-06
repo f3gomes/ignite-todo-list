@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
-import styles from "./TaskList.module.css";
+import React, { useContext } from "react";
+import styles from "../styles/TaskList.module.css";
 import clip from "../assets/clipboard.svg";
-import { FaRegCircle, FaTrash } from "react-icons/fa";
-import { BsCheckCircleFill } from "react-icons/bs";
 import { MainContext } from "../context";
+import TaskItem from "./TaskItem";
 
 interface TaskProps {
   id: number;
@@ -46,7 +45,9 @@ export default function TaskList() {
         </div>
         <div>
           <strong>Concluídas</strong>
-          <span>{finishedTasks.length}</span>
+          <span>
+            {finishedTasks.length} de {tasks.length}
+          </span>
         </div>
       </div>
 
@@ -54,30 +55,14 @@ export default function TaskList() {
         <>
           <div className={styles.taskList}>
             {tasks.map((item: TaskProps) => (
-              <div className={styles.taskItem} key={item.id}>
-                <span>
-                  {item.status === "C" ? (
-                    <FaRegCircle
-                      onClick={() => handleUpdateTaskState(item.id)}
-                    />
-                  ) : (
-                    <BsCheckCircleFill
-                      color="#5e60ce"
-                      onClick={() => handleUpdateTaskState(item.id)}
-                    />
-                  )}
-                </span>
-                <p
-                  className={`${
-                    item.status === "F" ? styles.completedTask : ""
-                  }`}
-                >
-                  {item.desc}
-                </p>
-                <span onClick={() => handleDeleteTask(item.id)}>
-                  <FaTrash />
-                </span>
-              </div>
+              <TaskItem
+                key={item.id}
+                id={item.id}
+                desc={item.desc}
+                status={item.status}
+                handleDeleteTask={handleDeleteTask}
+                handleUpdateTaskState={handleUpdateTaskState}
+              />
             ))}
           </div>
         </>

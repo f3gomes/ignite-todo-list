@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { MainContext } from "../context";
-import styles from "./TaskInput.module.css";
+import styles from "../styles/TaskInput.module.css";
 
 export default function TaskInput() {
   const [textInput, setTextInput] = useState("");

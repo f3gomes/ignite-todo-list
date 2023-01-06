@@ -17,6 +17,10 @@
   gap: 0.4rem;
 }
 
+.header > div:last-child > span {
+  width: 3.5rem;
+}
+
 .header > div:first-child > strong {
   color: var(--blue-100);
 }
@@ -60,46 +64,8 @@
   margin-top: 1rem;
 }
 
-.taskItem {
-  background: var(--gray-500);
-  border-radius: 8px;
-  height: 4.5rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.2rem;
-  margin-bottom: 0.75rem;
-}
-
-.taskItem > span:first-child {
-  color: var(--blue-100);
-  cursor: pointer;
-}
-
-.taskItem > span:last-child {
-  color: var(--gray-300);
-  cursor: pointer;
-}
-
-.taskItem > span:first-child:hover {
-  color: var(--blue-200);
-}
-
-.taskItem > span:last-child:hover {
-  color: var(--red-200);
-}
-
-.completedTask {
-  text-decoration: line-through;
-}
-
 @media (max-width: 768px) {
   .header {
     padding: 0 1rem;
-  }
-
-  .taskItem {
-    margin: 0.75rem 1rem;
   }
 }
