@@ -20,17 +20,27 @@ Aplicação criada para o primeiro desafio da trilha ignite do curso da Rocketse
 
 ## Rodando localmente
 
+
+Clone o repositório
+
 ```bash
-# Clone o repositório
 git clone https://github.com/fomes/ignite-todo-list.git
+```
 
-# Acesse a pasta do projeto
+Acesse a pasta do projeto
+
+```bash
 cd ignite-todo-list
+```
 
-# Instale as dependências
+Instale as dependências
+
+```bash
 npm i
+```
+Execute a aplicação
 
-# Execute a aplicação
+```bash
 npm run dev
 ```
 
