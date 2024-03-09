@@ -1,50 +1,73 @@
-import React, { useContext } from "react";
-import styles from "../styles/TaskList.module.css";
-import clip from "../assets/clipboard.svg";
-import { MainContext } from "../context";
-import TaskItem from "./TaskItem";
+import React, { useContext, useEffect, useState } from "react";
 
-interface TaskProps {
-  id: number;
-  desc: string;
-  status: string;
-}
+import TaskItem from "./TaskItem";
+import clip from "../assets/clipboard.svg";
+import { getTasks } from "../actions/getTasks";
+import styles from "../styles/TaskList.module.css";
+import { removeTask } from "../actions/removeTask";
+import { updateTask } from "../actions/updateTask";
+import { MainContext, TaskProps } from "../context";
 
 export default function TaskList() {
   const { tasks, setTasks } = useContext(MainContext);
+  const [filteredTasks, setFilteredTasks] = useState<any>([]);
 
-  const finishedTasks = tasks?.filter((item: TaskProps) => item.status === "F");
+  let finishedTasks = tasks?.filter((item: TaskProps) => item.done);
+  let unfinishedTasks = tasks?.filter((item: TaskProps) => !item.done);
 
-  const handleDeleteTask = (id: number) => {
-    const updateTasks = tasks.filter((item: TaskProps) => item.id !== id);
-    setTasks(updateTasks);
+  const handleDeleteTask = async (id: string) => {
+    await removeTask(id);
+
+    const list = await getTasks();
+    setTasks(list);
   };
 
-  const handleUpdateTaskState = (id: number) => {
-    const updateTasks = tasks.map((item: TaskProps) => {
-      if (item.id === id) {
-        if (item.status === "C") {
-          return { ...item, status: "F" };
-        }
+  const handleUpdateTaskState = async (id: string, done: boolean) => {
+    const data = { done: done };
+    await updateTask(id, data);
 
-        return { ...item, status: "C" };
-      } else {
-        return item;
-      }
-    });
-
-    setTasks(updateTasks);
+    const list = await getTasks();
+    setTasks(list);
   };
+
+  const handleFilterFinished = () => {
+    setFilteredTasks(finishedTasks);
+  };
+
+  const handleFilterUnFinished = () => {
+    setFilteredTasks(unfinishedTasks);
+  };
+
+  if (!tasks) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.main}>
+          <div>Carregando...</div>
+        </div>
+      </div>
+    );
+  }
+
+  useEffect(() => {
+    setFilteredTasks(unfinishedTasks);
+  }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div>
-          <strong>Tarefas criadas</strong>
-          <span>{tasks?.length}</span>
+          <strong
+            onClick={handleFilterUnFinished}
+            style={{ cursor: "pointer" }}
+          >
+            Tarefas a fazer
+          </strong>
+          <span>{unfinishedTasks?.length}</span>
         </div>
         <div>
-          <strong>Concluídas</strong>
+          <strong onClick={handleFilterFinished} style={{ cursor: "pointer" }}>
+            Concluídas
+          </strong>
           <span
             style={{ width: finishedTasks.length > 0 ? "3.5rem" : "1.68rem" }}
           >
@@ -55,17 +78,19 @@ export default function TaskList() {
         </div>
       </div>
 
-      {tasks?.length > 0 ? (
+      {filteredTasks?.length > 0 ? (
         <>
           <div className={styles.taskList}>
-            {tasks.map((item: TaskProps) => (
+            {filteredTasks?.map((item: TaskProps) => (
               <TaskItem
-                key={item.id}
-                id={item.id}
+                key={item._id}
+                id={item._id}
                 desc={item.desc}
-                status={item.status}
-                handleDeleteTask={handleDeleteTask}
-                handleUpdateTaskState={handleUpdateTaskState}
+                done={item.done}
+                handleDeleteTask={() => handleDeleteTask(item._id)}
+                handleUpdateTaskState={() =>
+                  handleUpdateTaskState(item._id, !item.done)
+                }
               />
             ))}
           </div>
@@ -76,8 +101,7 @@ export default function TaskList() {
             <img src={clip} alt="lista" />
           </div>
           <div>
-            <strong>Você ainda não tem tarefas cadastradas</strong>
-            <p>Crie tarefas e organize seus itens a fazer</p>
+            <strong>Acompanhe o andamento de suas tarefas</strong>
           </div>
         </div>
       )}

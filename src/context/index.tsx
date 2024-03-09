@@ -1,14 +1,17 @@
 import { createContext, useEffect, useState } from "react";
+import { getTasks } from "../actions/getTasks";
 
-interface TaskProps {
-  id: number;
+export interface TaskProps {
+  _id: string;
   desc: string;
-  status: string;
+  done: boolean;
 }
 
 interface DataProps {
+  isLoading: boolean;
   tasks: TaskProps[];
-  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]> | any>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setTasks: React.Dispatch<React.SetStateAction<any>>;
 }
 
 interface ProviderProps {
@@ -18,20 +21,26 @@ interface ProviderProps {
 export const MainContext = createContext({} as DataProps);
 
 export const ContextProvider = ({ children }: ProviderProps) => {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")!) || []
-  );
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const updateTaskList = async () => {
+    const list = await getTasks();
+    setTasks(list);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    updateTaskList();
+  }, []);
 
   return (
     <MainContext.Provider
       value={{
         tasks,
         setTasks,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

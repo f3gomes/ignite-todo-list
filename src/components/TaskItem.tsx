@@ -3,33 +3,33 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { FaRegCircle, FaTrash } from "react-icons/fa";
 import styles from "../styles/TaskItem.module.css";
 
-interface TaskProps {
-  id: number;
+interface TaskItemProps {
+  id: string;
   desc: string;
-  status: string;
-  handleDeleteTask: (id: number) => void;
-  handleUpdateTaskState: (id: number) => void;
+  done: boolean;
+  handleDeleteTask: (id: string) => void;
+  handleUpdateTaskState: (id: string) => void;
 }
 
 export default function TaskItem({
   id,
   desc,
-  status,
+  done,
   handleDeleteTask,
   handleUpdateTaskState,
-}: TaskProps) {
-  let styleClass = status === "C" ? styles.taskCreated : styles.taskFinished;
+}: TaskItemProps) {
+  let styleClass = done ? styles.taskCreated : styles.taskFinished;
 
   return (
     <div className={styles.taskItem}>
       <span className={styleClass}>
-        {status === "C" ? (
+        {!done ? (
           <FaRegCircle onClick={() => handleUpdateTaskState(id)} />
         ) : (
           <BsCheckCircleFill onClick={() => handleUpdateTaskState(id)} />
         )}
       </span>
-      <p className={`${status === "F" ? styles.taskFinished : ""}`}>{desc}</p>
+      <p className={`${done ? styles.taskFinished : ""}`}>{desc}</p>
       <span onClick={() => handleDeleteTask(id)}>
         <FaTrash />
       </span>

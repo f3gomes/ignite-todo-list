@@ -1,24 +1,25 @@
 import React, { useContext, useState } from "react";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
-import { MainContext } from "../context";
 import styles from "../styles/TaskInput.module.css";
+import { createTask } from "../actions/createTaskt";
+import { getTasks } from "../actions/getTasks";
+import { MainContext } from "../context";
 
 export default function TaskInput() {
-  const [textInput, setTextInput] = useState("");
-  const { tasks, setTasks } = useContext(MainContext);
+  const [desc, setDesc] = useState("");
+  const { setTasks, setIsLoading } = useContext(MainContext);
 
-  const handleNewTask = () => {
-    if (textInput === "") {
+  const handleNewTask = async () => {
+    if (desc === "") {
       alert("Digite uma descrição!");
     } else {
-      const newTask = {
-        id: tasks.length + 1,
-        desc: textInput,
-        status: "C",
-      };
+      const data = { desc };
+      await createTask(data);
+      setDesc("");
 
-      setTasks([...tasks, newTask]);
-      setTextInput("");
+      const list = await getTasks();
+      setTasks(list);
+      setIsLoading(false);
     }
   };
 
@@ -26,9 +27,9 @@ export default function TaskInput() {
     <div className={styles.container}>
       <input
         type="text"
-        value={textInput}
+        value={desc}
         placeholder="Adicione uma nova tarefa"
-        onChange={(event) => setTextInput(event.target.value)}
+        onChange={(event) => setDesc(event.target.value)}
       />
       <button onClick={handleNewTask}>
         Criar <MdOutlineAddCircleOutline size={15} />

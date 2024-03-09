@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
-import logo from "../assets/logo.png";
+import { FaClipboardList } from "react-icons/fa";
 
 export default function Header() {
   return (
     <div className={styles.container}>
-      <img src={logo} alt="foguete" />
+      <FaClipboardList size={28}/>
       <h1>
-        <span>to</span>
-        <span>do</span>
+        <span>Task</span>
+        <span>Manager</span>
       </h1>
     </div>
   );
