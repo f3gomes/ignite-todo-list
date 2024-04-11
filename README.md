@@ -1,8 +1,4 @@
 <p align="center">
-  <img height="30%" src="./src/assets/logo.png" />
-</p>
-
-<p align="center">
     <strong>TODO List App</strong>
 </p>
 
